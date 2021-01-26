@@ -1,0 +1,36 @@
+resources:
+- name: source-code
+  type: git
+  source:
+    uri: https://github.com/devulrix/spring-petclinic.git
+    branch: main
+
+- name: petclinic-image
+  type: docker-image
+  source:
+    username: ((docker-user))
+    password: ((docker-password))
+    repository: ((docker-repo))/t-image     
+    tag: 1.0
+
+jobs:
+- name: build-petclinic
+  plan:
+  - get: source-code
+    trigger: true
+  - task: compile-and-test
+    file: source-code/ci/tasks/build.yml
+
+- name: build-container
+  public: true
+  serial: true
+  plan:
+  - get: source-code
+    trigger: true
+  - put: petclinic-image
+    params:
+      build: ./releases
+      tag_as_latest: true
+
+
+    

@@ -1,0 +1,19 @@
+---
+platform: linux
+
+image_resource: 
+  type: docker-image
+  source:
+    repository: gcr.io/bitnami-containers/java
+    tag: latest
+
+inputs:
+    - name: source-code
+
+outputs:
+    - name: target
+
+run:
+  path: /bin/sh
+  args:
+  - source-code/ci/scripts/build.sh
