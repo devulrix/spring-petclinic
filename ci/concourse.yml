@@ -15,6 +15,8 @@ resources:
 
 jobs:
 - name: build-petclinic
+  public: true
+  serial: true
   plan:
   - get: source-code
     trigger: true
@@ -27,7 +29,11 @@ jobs:
   plan:
   - get: source-code
     trigger: true
+    passed:
+    - build-petclinic
   - put: petclinic-image
+    inputs:
+    - target
     params:
       build: ./releases
       tag_as_latest: true

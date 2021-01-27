@@ -13,6 +13,9 @@ inputs:
 outputs:
     - name: target
 
+caches:
+  - path: source-code/maven
+
 run:
   path: /bin/sh
   args:
