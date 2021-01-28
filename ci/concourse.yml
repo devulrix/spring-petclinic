@@ -22,21 +22,13 @@ jobs:
     trigger: true
   - task: compile-and-test
     file: source-code/ci/tasks/build.yml
+  - task: build-petclinic-image
+    file: source-code/ci/tasks/image.yml
 
-- name: build-container
+- name: deployment
   public: true
   serial: true
   plan:
-  - get: source-code
+  - get: petclinic-image
     trigger: true
-    passed:
-    - build-petclinic
-  - put: petclinic-image
-    inputs:
-    - target
-    params:
-      build: ./releases
-      tag_as_latest: true
-
-
     
