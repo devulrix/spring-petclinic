@@ -18,7 +18,7 @@ spec:
         app: petclinic
     spec:
       containers:
-      - image: harbor.vlab.uhtec.de/build/petclinic
+      - image: harbor.vlab.uhtec.de/build/petclinic:1.0
         ports:
           - containerPort: 8080
         name: petclinic
@@ -33,6 +33,8 @@ spec:
           httpGet:
             path: /actuator/health/readiness
             port: 8080
+          initialDelaySeconds: 25
+          periodSeconds: 3
         env:
           - name: spring_profiles_active
             value: mysql
